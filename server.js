@@ -21,16 +21,16 @@ var configDB = require('./config/database.js');
 mongoose.connect(configDB.url);
 
 //routes variables
-var routes = require('./routes/index');
-var users = require('./routes/users');
+var routes = require('./app/routes/index');
+var users = require('./app/routes/users');
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, './app/views'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
 //general
-app.use(favicon(__dirname + '/public/images/favicon.ico'));
+app.use(favicon(__dirname + '/app/public/images/favicon.ico'));
 app.use(logger('dev'));
 app.use(multer({ dest: './uploads' }))
 app.use(cookieParser());
@@ -76,7 +76,7 @@ app.use(function (req, res, next) {
 });
 
 // pipeline
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/app/public')));
 app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 
 //routes
