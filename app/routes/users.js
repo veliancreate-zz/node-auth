@@ -14,7 +14,6 @@ router.get('/register', function(req, res, next) {
 
 router.post('/register', function(req, res, next) {
   userCheck = userService.checkRegistration(req, next);
-  console.log(userCheck)
   if(userCheck.errors){
     res.render('register', {
       errors: userCheck.errors,
