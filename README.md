@@ -4,14 +4,14 @@ Includes Mongo, Mongoose, Bower, Grunt, SASS, Karma, Travis CI, Protractor. Karm
 
 Authentication:
 
-	* Passport
-	* Bcrypt
-	* Passport sessions enabled
+ * Passport
+ * Bcrypt
+ * Passport sessions enabled
 
 Database:
 
-	* Mongo
-	* Mongoose
+ * Mongo
+ * Mongoose
 
 Bower dependencies:
 
