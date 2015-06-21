@@ -6,8 +6,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var passport = require('passport');
-var session = require('express-session');
 var LocalStrategy = require('passport-local').Strategy
+var session = require('express-session');
 var bodyParser = require('body-parser');
 var expressValidator = require('express-validator');
 var multer = require('multer');
@@ -26,8 +26,8 @@ var users = require('./app/routes/users');
 
 // view engine setup
 app.set('views', path.join(__dirname, './app/views'));
-app.engine('html', require('ejs').renderFile);
-app.set('view engine', 'html');
+app.engine('html', require('jade').renderFile);
+app.set('view engine', 'jade');
 
 //general
 app.use(favicon(__dirname + '/app/public/images/favicon.ico'));
@@ -66,7 +66,7 @@ app.use(session(
 
 //passport
 app.use(passport.initialize());
-app.use(passport.session()); // persistent login sessions
+require('./config/passport')(passport);
 
 //flash messages
 app.use(flash()); // use connect-flash for flash messages stored in session
