@@ -66,7 +66,14 @@ app.use(session(
 
 //passport
 app.use(passport.initialize());
+app.use(passport.session());
 require('./config/passport')(passport);
+
+//current user
+app.get('*', function(req, res, next){
+  res.locals.user = req.user || null;
+  next();
+});
 
 //flash messages
 app.use(flash()); // use connect-flash for flash messages stored in session
