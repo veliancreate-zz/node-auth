@@ -11,6 +11,7 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 var expressValidator = require('express-validator');
 var multer = require('multer');
+var gm = require('gm')
 var flash = require('connect-flash');
 var expressValidator = require('express-validator');
 
@@ -32,10 +33,11 @@ app.set('view engine', 'jade');
 //general
 app.use(favicon(__dirname + '/app/public/images/favicon.ico'));
 app.use(logger('dev'));
-app.use(multer({ dest: './uploads' }))
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(multer({ dest: './uploads/' }))
+app.use('/uploads', express.static(__dirname + '/uploads'));
 
 //validator
 app.use(expressValidator({

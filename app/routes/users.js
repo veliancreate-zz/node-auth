@@ -15,21 +15,16 @@ router.get('/register', function(req, res, next) {
 router.post('/register', function(req, res, next) {
   userCheck = userService.checkRegistration(req, next);
   if(userCheck.errors){
-    res.render('register', {
-      errors: userCheck.errors,
-    });
+    res.render('register', { errors: userCheck.errors });
   } else {
-    var newUser = new User({
-      name: userCheck.name,
-      email: userCheck.email,
-      username: userCheck.username,
-      password: userCheck.password,
-      profileImage: userCheck.profileImage
-    });
-    User.createUser(newUser, function(err, user){
+    User.createUser(userCheck, function(err, user){
       if(err) throw err;
+      userService.resizeImage(userCheck, function(){
+        req.login(user, function(err) {
+          res.redirect('/');
+        });
+      });
     });
-    res.redirect('/')
   }   
 });
 
@@ -38,11 +33,11 @@ router.get('/login', function(req, res, next) {
 });
 
 router.post('/login', 
-  passport.authenticate('local', 
-    { successRedirect: '/',
-      failureRedirect: '/users/login', 
-      failureFlash: true
-    }) 
+  passport.authenticate('local', { 
+    successRedirect: '/',
+    failureRedirect: '/users/login', 
+    failureFlash: true
+  }) 
 );
 
 router.get('/logout', function(req, res){

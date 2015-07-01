@@ -14,7 +14,7 @@ var UserSchema = mongoose.Schema({
   password: {
     type: String, required: true, bcrypt: true
   },
-  profileimage: {
+  profileImage: {
     type: String
   }
 });
@@ -37,10 +37,19 @@ module.exports.getUserById = function(id, callback){
   User.findById(id, callback);
 }
 
-module.exports.createUser = function(newUser, callback){
+module.exports.createUser = function(userCheck, callback){
+  var newUser = new User({
+    name: userCheck.name,
+    email: userCheck.email,
+    username: userCheck.username,
+    password: userCheck.password,
+    profileImage: userCheck.profileImage
+  });
   bcrypt.hash(newUser.password, 10, function(err, hash){
     if(err) throw err;
     newUser.password = hash;
     newUser.save(callback)  
   });
 }
+
+
